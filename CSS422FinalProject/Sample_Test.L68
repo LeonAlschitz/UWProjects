@@ -1,0 +1,84 @@
+00000000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 6/11/2024 6:07:11 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00000000                             7  
+00000000                             8                    ; first instruction of program
+00000000                             9  
+00000000                            10  TEST
+00000000  4E75                      11      RTS
+00000002  4E71                      12      NOP
+00000004                            13      
+00000004  1401                      14      MOVE.B      D1,     D2
+00000006  343C 1231                 15      MOVE.W      #$1231, D2
+0000000A  2409                      16      MOVE.L      A1,     D2
+0000000C  3459                      17      MOVEA.W     (A1)+,  A2
+0000000E  2461                      18      MOVEA.L     -(A1),  A2
+00000010  48A1 007F                 19      MOVEM.W     A1-A7,  -(A1)
+00000014  7000                      20      MOVEQ       #$0,    D0
+00000016  7C32                      21      MOVEQ       #50,  D6
+00000018  45D1                      22      LEA         (A1),   A2
+0000001A                            23      
+0000001A  C401                      24      AND.B       D1,     D2
+0000001C  CA93                      25      AND.L       (A3),   D5
+0000001E  C262                      26      AND.W       -(A2),  D1
+00000020  C07C 007B                 27      AND.W       #123,   D0         
+00000024  C4B9 0000A000             28      AND.L       $A000,  D2          *shows up as A000 in data
+0000002A  C479 0000A000             29      AND.W       $0000A000, D2       *shows up as 0000A000 in data
+00000030  C01E                      30      AND.B       (A6)+,  D0
+00000032  C312                      31      AND.B       D1,     (A2)
+00000034  C579 FFFF1234             32      AND.W       D2, $FFFF1234       *shows up as A000 in data, MOVE.L will take word from next opcode
+0000003A                            33      
+0000003A  8401                      34      OR.B        D1,     D2
+0000003C  8C38 1234                 35      OR.B        $00001234,  D6
+00000040  8E39 0000ABCD             36      OR.B        $ABCD,  D7
+00000046  8D39 1234ABCD             37      OR.B        D6,     $1234ABCD
+0000004C  8F39 0000ABCD             38      OR.B        D7,     $ABCD
+00000052                            39      
+00000052  70CD                      40      MOVEQ       #$CD,    D0
+00000054  7C32                      41      MOVEQ       #50,  D6
+00000056                            42      
+00000056  4600                      43      NOT.B       D0
+00000058  465A                      44      NOT.W       (A2)+
+0000005A  46B9 0000A000             45      NOT.L       $A000
+00000060                            46  
+00000060                            47  
+00000060  D401                      48      ADD.B       D1,     D2
+00000062  D4C1                      49      ADDA.W      D1,     A2
+00000064  524A                      50      ADDQ.W      #$1,    A2
+00000066  9401                      51      SUB.B       D1,     D2
+00000068                            52      
+00000068  4EB8 0000                 53      JSR         TEST
+0000006C  6E92                      54      BGT.B       TEST
+0000006E  6F00 FF90                 55      BLE.W       TEST
+00000072  6700 FF8C                 56      BEQ.W       TEST
+00000076  6088                      57      BRA         TEST
+00000078  4678 0000                 58      NOT         TEST
+0000007C                            59      
+0000007C  E32A                      60      LSL.B       D1,     D2
+0000007E  E22A                      61      LSR.B       D1,     D2
+00000080  E322                      62      ASL.B       D1,     D2
+00000082  E222                      63      ASR.B       D1,     D2
+00000084  E33A                      64      ROL.B       D1,     D2
+00000086  E23A                      65      ROR.B       D1,     D2
+00000088                            66  
+00000088                            67  
+00000088                            68  
+00000088                            69  
+00000088                            70  
+Line 71 WARNING: END directive missing, starting address not set
+
+No errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+TEST                0

@@ -1,0 +1,688 @@
+00000000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 8/11/2022 4:50:14 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00000000                             7  
+00000000                             8  
+00000000                             9  *------Use D3 to store original data
+00000000                            10  *------Use D4 to copy and modify D3 data
+00000000                            11  *------Use D6 as a boolean to know wether we have printed or not
+00000000                            12  
+00000000                            13  *------Jump to different Isolate methods
+00000000                            14  *------keep returning and jumping untill you find the correct Method
+00000000                            15  *------Print out OPCode message, and then return to main loop
+00000000                            16  CHECK_OPCODES:
+00000000  4286                      17          CLR.L   D6
+00000002                            18  
+00000002  4EB9 000000A2             19          JSR     ISOLATE_16
+00000008  BC3C 0001                 20          CMP.B   #$1,    D6
+0000000C  6700 0058                 21          BEQ     RETURN
+00000010                            22          
+00000010  4EB9 000000B4             23          JSR     ISOLATE_15_6
+00000016  BC3C 0001                 24          CMP.B   #$1,    D6
+0000001A  6700 004A                 25          BEQ     RETURN
+0000001E                            26  
+0000001E  4EB9 000000C6             27          JSR     ISOLATE_15_8
+00000024  BC3C 0001                 28          CMP.B   #$1,    D6
+00000028  6700 003C                 29          BEQ     RETURN
+0000002C                            30          
+0000002C  4EB9 000000E0             31          JSR     ISOLATE_15_11
+00000032  BC3C 0001                 32          CMP.B   #$1,    D6
+00000036  6700 002E                 33          BEQ     RETURN
+0000003A                            34          
+0000003A  4EB9 00000068             35          JSR     ISOLATE_15_12
+00000040  BC3C 0001                 36          CMP.B   #$1,    D6
+00000044  6700 0020                 37          BEQ     RETURN
+00000048                            38          
+00000048  4EB9 00000104             39          JSR     ISOLATE_8_6
+0000004E  BC3C 0001                 40          CMP.B   #$1,    D6        
+00000052  6700 0012                 41          BEQ     RETURN
+00000056                            42          
+00000056  4EB9 000000F2             43          JSR     ISOLATE_15_14    
+0000005C  BC3C 0001                 44          CMP.B   #$1,    D6
+00000060  6700 0004                 45          BEQ     RETURN
+00000064                            46          
+00000064                            47  
+00000064  4E75                      48          RTS
+00000066                            49  RETURN:
+00000066  4E75                      50          RTS
+00000068                            51  
+00000068                            52  ISOLATE_15_12:
+00000068  3803                      53          MOVE.W      D3,     D4
+0000006A  343C 000C                 54          MOVE.W      #12,     D2
+0000006E  E46C                      55          LSR.W       D2,     D4
+00000070                            56          
+00000070  B83C 000D                 57          CMP.B       #$D,   D4
+00000074  6700 026C                 58          BEQ         OP_CODE_ADD
+00000078                            59         ;CMP.W       #$D,   D4
+00000078                            60         ;BEQ         OP_CODE_ADDA
+00000078  B83C 0005                 61          CMP.B       #$5,   D4
+0000007C  6700 0288                 62          BEQ         OP_CODE_ADDQ
+00000080  B83C 0009                 63          CMP.B       #$9,   D4
+00000084  6700 0292                 64          BEQ         OP_CODE_SUB
+00000088                            65          
+00000088  B83C 0007                 66          CMP.B       #$7,    D4
+0000008C  6700 02C0                 67          BEQ         OP_CODE_MOVEQ
+00000090  B83C 0008                 68          CMP.B       #$8,    D4
+00000094  6700 0396                 69          BEQ         OP_CODE_OR      *may get confused with DIVU + any other opcodes that start with 1000 (ones that we are not required to cover)
+00000098  B83C 000C                 70          CMP.B       #$C,    D4
+0000009C  6700 030A                 71          BEQ         OP_CODE_AND
+000000A0                            72  
+000000A0  4E75                      73          RTS
+000000A2                            74          
+000000A2                            75  ISOLATE_16:
+000000A2                            76  
+000000A2  B67C 4E71                 77          CMP.W       #$4E71, D3
+000000A6  6700 0294                 78          BEQ         OP_CODE_NOP
+000000AA  B67C 4E75                 79          CMP.W       #$4E75, D3
+000000AE  6700 027A                 80          BEQ         OP_CODE_RTS
+000000B2                            81  
+000000B2  4E75                      82          RTS
+000000B4                            83  
+000000B4                            84  ISOLATE_15_6:
+000000B4                            85          
+000000B4  3803                      86          MOVE.W      D3,     D4
+000000B6  343C 0006                 87          MOVE.W      #6,     D2
+000000BA  E46C                      88          LSR.W       D2,     D4
+000000BC                            89          
+000000BC  B87C 013A                 90          CMP.W       #$13A,  D4
+000000C0  6700 03EE                 91          BEQ         OP_CODE_JSR
+000000C4                            92          
+000000C4  4E75                      93          RTS
+000000C6                            94  
+000000C6                            95  ISOLATE_15_8:
+000000C6  3803                      96          MOVE.W      D3,     D4
+000000C8  343C 0008                 97          MOVE.W      #8,     D2
+000000CC  E46C                      98          LSR.W       D2,     D4
+000000CE                            99          
+000000CE  B83C 0046                100          CMP.B       #$46,   D4
+000000D2  6700 0050                101          BEQ         OP_CODE_NOT
+000000D6  B83C 0060                102          CMP.B       #$60,   D4
+000000DA  6700 0072                103          BEQ         OP_CODE_BRA
+000000DE                           104  
+000000DE  4E75                     105          RTS
+000000E0                           106          
+000000E0                           107  ISOLATE_15_11:
+000000E0  3803                     108          MOVE.W      D3,     D4
+000000E2  343C 000B                109          MOVE.W      #11,    D2
+000000E6  E46C                     110          LSR.W       D2,     D4
+000000E8                           111          
+000000E8  B83C 0009                112          CMP.B       #$9,    D4
+000000EC  6700 00FC                113          BEQ         OP_CODE_MOVEM
+000000F0                           114          
+000000F0  4E75                     115          RTS
+000000F2                           116          
+000000F2                           117  ISOLATE_15_14:
+000000F2  3803                     118          MOVE.W      D3,     D4
+000000F4  343C 000E                119          MOVE.W      #14,    D2
+000000F8  E46C                     120          LSR.W       D2,     D4
+000000FA                           121          
+000000FA  B83C 0000                122          CMP.B       #$0,    D4
+000000FE  6700 0072                123          BEQ         OP_CODE_MOVE
+00000102                           124          
+00000102  4E75                     125          RTS
+00000104                           126          
+00000104                           127  ISOLATE_8_6:
+00000104  3803                     128          MOVE.W      D3,     D4
+00000106  343C 0007                129          MOVE.W      #7,     D2
+0000010A  E56C                     130          LSL.W       D2,     D4
+0000010C  343C 000D                131          MOVE.W      #13,    D2
+00000110  E46C                     132          LSR.W       D2,     D4
+00000112                           133          
+00000112  B83C 0001                134          CMP.B       #$1,    D4
+00000116  6700 0096                135          BEQ         OP_CODE_MOVEA
+0000011A  B83C 0007                136          CMP.B       #$7,    D4
+0000011E  6700 0040                137          BEQ         OP_CODE_LEA
+00000122                           138  
+00000122  4E75                     139          RTS
+00000124                           140  
+00000124                           141  
+00000124                           142  
+00000124                           143  *----------------
+00000124                           144  OP_CODE_NOT:
+00000124  43F9 000004D4            145          LEA         NOT_MSG, A1
+0000012A  103C 000E                146          MOVE.B      #14, D0
+0000012E  4E4F                     147          TRAP        #15
+00000130                           148          
+Line 149 ERROR: Undefined symbol
+00000130  4EB9 004DBD16            149          JSR         SIZE_7_6
+00000136                           150          
+00000136  43F9 0000051C            151          LEA         WHITESPACE, A1
+0000013C  103C 000E                152          MOVE.B      #14, D0
+00000140  4E4F                     153          TRAP        #15
+00000142                           154          
+Line 155 ERROR: Undefined symbol
+00000142  4EB9 004DBD16            155          JSR         EFFECTIVEADD_5_0
+00000148                           156          
+00000148  1C3C 0001                157          MOVE.B      #1,      D6
+0000014C                           158          
+0000014C  4E75                     159          RTS 
+0000014E                           160  OP_CODE_BRA:
+0000014E  43F9 000004D8            161          LEA         BRA_MSG, A1
+00000154  103C 000E                162          MOVE.B      #14, D0
+00000158  4E4F                     163          TRAP        #15
+0000015A                           164          
+0000015A  1C3C 0001                165          MOVE.B      #1,      D6
+0000015E                           166          *MOVE.W      (A3)+,   D7
+0000015E                           167          
+0000015E  4E75                     168          RTS
+00000160                           169          
+00000160                           170  OP_CODE_LEA:
+00000160  43F9 000004ED            171          LEA         LEA_MSG, A1
+00000166  103C 000E                172          MOVE.B      #14, D0
+0000016A  4E4F                     173          TRAP        #15
+0000016C                           174  
+0000016C  1C3C 0001                175          MOVE.B      #1,      D6
+00000170                           176  
+00000170  4E75                     177          RTS        
+00000172                           178  *-----------------
+00000172                           179  OP_CODE_MOVE:
+00000172                           180  
+00000172  43F9 000004DC            181          LEA         MOVE_MSG, A1
+00000178  103C 000E                182          MOVE.B      #14, D0
+0000017C  4E4F                     183          TRAP        #15
+0000017E                           184          
+Line 185 ERROR: Undefined symbol
+0000017E  4EB9 004DBD16            185          JSR         SIZE_13_12
+00000184                           186          
+00000184  43F9 0000051C            187          LEA         WHITESPACE, A1
+0000018A  103C 000E                188          MOVE.B      #14, D0
+0000018E  4E4F                     189          TRAP        #15
+00000190                           190          
+Line 191 ERROR: Undefined symbol
+00000190  4EB9 004DBD16            191          JSR         EFFECTIVEADD_5_0
+00000196                           192          
+00000196  43F9 0000051E            193          LEA         WHITESPACE_COM, A1
+0000019C  103C 000E                194          MOVE.B      #14, D0
+000001A0  4E4F                     195          TRAP        #15
+000001A2                           196          
+Line 197 ERROR: Undefined symbol
+000001A2  4EB9 004DBD16            197          JSR         DESTINATION_11_6
+000001A8                           198  
+000001A8  1C3C 0001                199          MOVE.B      #1,      D6
+000001AC                           200  
+000001AC  4E75                     201          RTS
+000001AE                           202          
+000001AE                           203  OP_CODE_MOVEA:
+000001AE  43F9 000004E7            204          LEA         MOVEA_MSG, A1
+000001B4  103C 000E                205          MOVE.B      #14, D0
+000001B8  4E4F                     206          TRAP        #15
+000001BA                           207          
+Line 208 ERROR: Undefined symbol
+000001BA  4EB9 004DBD16            208          JSR         SIZE_13_12
+000001C0                           209          
+000001C0  43F9 0000051C            210          LEA         WHITESPACE, A1
+000001C6  103C 000E                211          MOVE.B      #14, D0
+000001CA  4E4F                     212          TRAP        #15
+000001CC                           213          
+Line 214 ERROR: Undefined symbol
+000001CC  4EB9 004DBD16            214          JSR         EFFECTIVEADD_5_0
+000001D2                           215          
+000001D2  43F9 0000051E            216          LEA         WHITESPACE_COM, A1
+000001D8  103C 000E                217          MOVE.B      #14, D0
+000001DC  4E4F                     218          TRAP        #15
+000001DE                           219          
+Line 220 ERROR: Undefined symbol
+000001DE  4EB9 004DBD16            220          JSR         PRINT_DESTINATION_DATA
+000001E4                           221  
+000001E4  1C3C 0001                222          MOVE.B      #1,      D6
+000001E8                           223  
+000001E8  4E75                     224          RTS
+000001EA                           225  
+000001EA                           226  OP_CODE_MOVEM:
+000001EA  43F9 000004E1            227          LEA         MOVEM_MSG, A1
+000001F0  103C 000E                228          MOVE.B      #14, D0
+000001F4  4E4F                     229          TRAP        #15
+000001F6                           230          
+Line 231 ERROR: Undefined symbol
+000001F6  4EB9 004DBD16            231          JSR         SIZE_6
+000001FC                           232          
+000001FC  3803                     233          MOVE.W      D3,     D4
+000001FE                           234          
+000001FE  343C 0005                235          MOVE.W      #5,     D2
+00000202  E56C                     236          LSL.W       D2,     D4
+00000204  343C 000F                237          MOVE.W      #15,    D2
+00000208  E46C                     238          LSR.W       D2,     D4
+0000020A                           239          
+0000020A  B83C 0000                240          CMP.B       #$0,    D4
+0000020E  6700 000C                241          BEQ         REG_TO_MEM
+00000212  B83C 0001                242          CMP.B       #$1,    D4
+00000216  6700 0076                243          BEQ         MEM_TO_REG
+0000021A                           244          
+0000021A  4E75                     245          RTS
+0000021C                           246  
+0000021C                           247  REG_TO_MEM:
+0000021C  43F9 0000051C            248          LEA         WHITESPACE, A1
+00000222  103C 000E                249          MOVE.B      #14,    D0
+00000226  4E4F                     250          TRAP        #15
+00000228                           251   
+00000228  343C 000A                252          MOVE.W      #10,    D2
+0000022C  E56C                     253          LSL.W       D2,     D4
+0000022E  343C 000D                254          MOVE.W      #13,    D2
+00000232  E46C                     255          LSR.W       D2,     D4
+00000234  2A4B                     256          MOVEA.L     A3,     A5
+00000236                           257  
+00000236  381D                     258          MOVE.W      (A5)+,   D4
+00000238  4280                     259          CLR.L       D0
+0000023A  4281                     260          CLR.L       D1
+0000023C  323C 00FF                261          MOVE.W      #$FF,    D1
+00000240  4286                     262          CLR.L       D6
+00000242  3C3C 00FF                263          MOVE.W      #$FF,    D6
+00000246                           264          
+00000246  B43C 0002                265          CMP.B       #$2,    D2
+0000024A  6700 000E                266          BEQ         RTM_1_A
+0000024E  B43C 0003                267          CMP.B       #$3,    D2
+00000252  6700 0006                268          BEQ         RTM_1_A 
+00000256                           269   
+00000256  6600 000C                270          BNE         RTM_1_B
+0000025A                           271  
+0000025A                           272  RTM_1_A:    
+Line 273 ERROR: Undefined symbol
+0000025A  4EB9 004DBD16            273          JSR         POST_INCR_MASK_FIELD
+00000260  6000 000C                274          BRA         RTM_2
+00000264                           275  RTM_1_B:    
+Line 276 ERROR: Undefined symbol
+00000264  4EB9 004DBD16            276          JSR         PRE_DECR_MASK_FIELD
+0000026A  6000 0002                277          BRA         RTM_2
+0000026E                           278  RTM_2:
+0000026E                           279  
+0000026E  43F9 0000051E            280          LEA         WHITESPACE_COM, A1
+00000274  103C 000E                281          MOVE.B      #14,    D0
+00000278  4E4F                     282          TRAP        #15
+0000027A                           283  
+0000027A  594D                     284          SUB.W       #4,     A5
+0000027C  361D                     285          MOVE.W      (A5)+,  D3
+Line 286 ERROR: Undefined symbol
+0000027E  4EB9 004DBD16            286          JSR         EFFECTIVEADD_5_0
+00000284  4286                     287          CLR.L       D6
+00000286  361B                     288          MOVE.W      (A3)+,  D3
+00000288  1C3C 0001                289          MOVE.B      #1,     D6
+0000028C  4E75                     290          RTS
+0000028E                           291      
+0000028E                           292      
+0000028E                           293  MEM_TO_REG:
+0000028E  43F9 0000051C            294          LEA         WHITESPACE, A1
+00000294  103C 000E                295          MOVE.B      #14, D0
+00000298  4E4F                     296          TRAP        #15
+0000029A                           297          
+Line 298 ERROR: Undefined symbol
+0000029A  4EB9 004DBD16            298          JSR         EFFECTIVEADD_5_0
+000002A0                           299          
+000002A0  43F9 0000051E            300          LEA         WHITESPACE_COM, A1
+000002A6  103C 000E                301          MOVE.B      #14, D0
+000002AA  4E4F                     302          TRAP        #15
+000002AC                           303          
+000002AC  103C 0010                304          MOVE.B      #$10,    D0
+000002B0                           305          
+000002B0  381B                     306          MOVE.W      (A3)+,  D4
+000002B2                           307          
+000002B2  B43C 0002                308          CMP.B       #$2,    D2
+000002B6  6700 000E                309          BEQ         MTR_1_A
+000002BA                           310          
+000002BA  B43C 0003                311          CMP.B       #$3,    D2
+000002BE  6700 0006                312          BEQ         MTR_1_A
+000002C2                           313          
+000002C2  6600 0010                314          BNE         MTR_1_B
+000002C6                           315  
+000002C6                           316  
+000002C6                           317  MTR_1_A:    
+Line 318 ERROR: Undefined symbol
+000002C6  4EB9 004DBD16            318          JSR         POST_INCR_MASK_FIELD
+000002CC  4286                     319          CLR.L       D6
+000002CE  1C3C 0001                320          MOVE.B      #1,     D6
+000002D2  4E75                     321          RTS
+000002D4                           322  MTR_1_B:    
+Line 323 ERROR: Undefined symbol
+000002D4  4EB9 004DBD16            323          JSR         PRE_DECR_MASK_FIELD
+000002DA  4286                     324          CLR.L       D6
+000002DC  1C3C 0001                325          MOVE.B      #1,     D6
+000002E0  4E75                     326          RTS
+000002E2                           327  
+000002E2                           328  *------------------------
+000002E2                           329  OP_CODE_ADD:
+000002E2  43F9 000004F1            330          LEA         ADD_MSG, A1
+000002E8  103C 000E                331          MOVE.B      #14, D0
+000002EC  4E4F                     332          TRAP        #15
+000002EE                           333          
+000002EE  1C3C 0001                334          MOVE.B      #1,      D6
+000002F2                           335          
+000002F2  4E75                     336          RTS
+000002F4                           337          
+000002F4                           338  OP_CODE_ADDA:
+000002F4  43F9 000004F5            339          LEA         ADDA_MSG, A1
+000002FA  103C 000E                340          MOVE.B      #14, D0
+000002FE  4E4F                     341          TRAP        #15
+00000300                           342          
+00000300  1C3C 0001                343          MOVE.B      #1,      D6
+00000304                           344          
+00000304  4E75                     345          RTS
+00000306                           346          
+00000306                           347  OP_CODE_ADDQ:
+00000306  43F9 000004FA            348          LEA         ADDQ_MSG, A1
+0000030C  103C 000E                349          MOVE.B      #14, D0
+00000310  4E4F                     350          TRAP        #15
+00000312                           351          
+00000312  1C3C 0001                352          MOVE.B      #1,      D6
+00000316                           353          
+00000316  4E75                     354          RTS
+00000318                           355  
+00000318                           356  OP_CODE_SUB:
+00000318  43F9 000004FF            357          LEA         SUB_MSG, A1
+0000031E  103C 000E                358          MOVE.B      #14, D0
+00000322  4E4F                     359          TRAP        #15
+00000324                           360          
+00000324  1C3C 0001                361          MOVE.B      #1,      D6
+00000328                           362          
+00000328  4E75                     363          RTS
+0000032A                           364          
+0000032A                           365  *------------------------        
+0000032A                           366  OP_CODE_RTS:
+0000032A  43F9 00000503            367          LEA         RTS_MSG, A1
+00000330  103C 000E                368          MOVE.B      #14, D0
+00000334  4E4F                     369          TRAP        #15
+00000336                           370          
+00000336  1C3C 0001                371          MOVE.B      #1,      D6
+0000033A                           372          
+0000033A  4E75                     373          RTS
+0000033C                           374          
+0000033C                           375  OP_CODE_NOP:
+0000033C  43F9 00000507            376          LEA         NOP_MSG, A1
+00000342  103C 000E                377          MOVE.B      #14, D0
+00000346  4E4F                     378          TRAP        #15
+00000348                           379          
+00000348  1C3C 0001                380          MOVE.B      #1,      D6
+0000034C                           381          
+0000034C  4E75                     382          RTS
+0000034E                           383          
+0000034E                           384  *------------------------  
+0000034E                           385  OP_CODE_MOVEQ:
+0000034E                           386          *NOTE MOVEQ has static bit at index 8
+0000034E  43F9 0000050B            387          LEA         MOVEQ_MSG, A1
+00000354  103C 000E                388          MOVE.B      #14, D0
+00000358  4E4F                     389          TRAP        #15
+0000035A                           390          
+0000035A  43F9 0000051C            391          LEA         WHITESPACE, A1
+00000360  103C 000E                392          MOVE.B      #14, D0
+00000364  4E4F                     393          TRAP        #15
+00000366                           394          
+00000366  43F9 00000525            395          LEA         IMM_DATA, A1
+0000036C  103C 000E                396          MOVE.B      #14, D0
+00000370  4E4F                     397          TRAP        #15
+00000372                           398  
+00000372  43F9 00000527            399          LEA         HEX, A1
+00000378  103C 000E                400          MOVE.B      #14, D0
+0000037C  4E4F                     401          TRAP        #15
+0000037E                           402         
+Line 403 ERROR: Undefined symbol
+0000037E  4EB9 004DBD16            403          JSR         DATA_7_0
+00000384                           404          
+00000384  43F9 0000051E            405          LEA         WHITESPACE_COM, A1
+0000038A  103C 000E                406          MOVE.B      #14, D0
+0000038E  4E4F                     407          TRAP        #15
+00000390                           408          
+00000390  43F9 00000521            409          LEA         DATA_REG, A1
+00000396  103C 000E                410          MOVE.B      #14, D0
+0000039A  4E4F                     411          TRAP        #15
+0000039C                           412          
+Line 413 ERROR: Undefined symbol
+0000039C  4EB9 004DBD16            413          JSR         REGISTER_11_9
+000003A2                           414          
+000003A2  1C3C 0001                415          MOVE.B      #1,      D6
+000003A6                           416          
+000003A6  4E75                     417          RTS
+000003A8                           418          
+000003A8                           419  OP_CODE_AND:
+000003A8  43F9 00000511            420          LEA         AND_MSG, A1
+000003AE  103C 000E                421          MOVE.B      #14, D0
+000003B2  4E4F                     422          TRAP        #15
+000003B4                           423          
+000003B4                           424          *check opmode
+000003B4                           425          *if starts with 1 do Dn ^ <ea> -> <ea>
+000003B4                           426          *OPMODE_8_6 will appent size next to opcode
+Line 427 ERROR: Undefined symbol
+000003B4  4EB9 004DBD16            427          JSR         OPMODE_8_6
+000003BA  E35C                     428          ROL.W       #1, D4
+000003BC  6500 0038                429          BCS         OP_CODE_AND2
+000003C0                           430          *else...
+000003C0                           431          
+000003C0  43F9 0000051C            432          LEA         WHITESPACE, A1
+000003C6  103C 000E                433          MOVE.B      #14, D0
+000003CA  4E4F                     434          TRAP        #15
+000003CC                           435          
+000003CC                           436          *check ea and print
+Line 437 ERROR: Undefined symbol
+000003CC  4EB9 004DBD16            437          JSR         EFFECTIVEADD_5_0
+000003D2                           438          
+000003D2  43F9 0000051E            439          LEA         WHITESPACE_COM, A1
+000003D8  103C 000E                440          MOVE.B      #14, D0
+000003DC  4E4F                     441          TRAP        #15
+000003DE                           442          
+000003DE                           443          *print out data reg
+000003DE                           444          
+000003DE  43F9 00000521            445          LEA         DATA_REG, A1
+000003E4  103C 000E                446          MOVE.B      #14, D0
+000003E8  4E4F                     447          TRAP        #15
+000003EA                           448          
+Line 449 ERROR: Undefined symbol
+000003EA  4EB9 004DBD16            449          JSR         REGISTER_11_9
+000003F0                           450          
+000003F0                           451          
+000003F0  1C3C 0001                452          MOVE.B      #1,      D6
+000003F4                           453          
+000003F4  4E75                     454          RTS
+000003F6                           455  
+000003F6                           456  OP_CODE_AND2:
+000003F6  43F9 0000051C            457          LEA         WHITESPACE, A1
+000003FC  103C 000E                458          MOVE.B      #14, D0
+00000400  4E4F                     459          TRAP        #15
+00000402                           460          
+00000402  43F9 00000521            461          LEA         DATA_REG, A1
+00000408  103C 000E                462          MOVE.B      #14, D0
+0000040C  4E4F                     463          TRAP        #15
+0000040E                           464          
+Line 465 ERROR: Undefined symbol
+0000040E  4EB9 004DBD16            465          JSR         REGISTER_11_9
+00000414                           466          
+00000414  43F9 0000051E            467          LEA         WHITESPACE_COM, A1
+0000041A  103C 000E                468          MOVE.B      #14, D0
+0000041E  4E4F                     469          TRAP        #15
+00000420                           470          
+Line 471 ERROR: Undefined symbol
+00000420  4EB9 004DBD16            471          JSR         EFFECTIVEADD_5_0
+00000426                           472          
+00000426  1C3C 0001                473          MOVE.B      #1,      D6
+0000042A                           474          
+0000042A  4E75                     475          RTS
+0000042C                           476  OP_CODE_OR:
+0000042C  43F9 00000515            477          LEA         OR_MSG, A1
+00000432  103C 000E                478          MOVE.B      #14, D0
+00000436  4E4F                     479          TRAP        #15
+00000438                           480          
+Line 481 ERROR: Undefined symbol
+00000438  4EB9 004DBD16            481          JSR         OPMODE_8_6
+0000043E  E35C                     482          ROL.W       #1, D4
+00000440  6500 0038                483          BCS         OP_CODE_OR2
+00000444                           484          
+00000444  43F9 0000051C            485          LEA         WHITESPACE, A1
+0000044A  103C 000E                486          MOVE.B      #14, D0
+0000044E  4E4F                     487          TRAP        #15
+00000450                           488          
+Line 489 ERROR: Undefined symbol
+00000450  4EB9 004DBD16            489          JSR         EFFECTIVEADD_5_0
+00000456                           490          
+00000456  43F9 0000051E            491          LEA         WHITESPACE_COM, A1
+0000045C  103C 000E                492          MOVE.B      #14, D0
+00000460  4E4F                     493          TRAP        #15
+00000462                           494          
+00000462  43F9 00000521            495          LEA         DATA_REG, A1
+00000468  103C 000E                496          MOVE.B      #14, D0
+0000046C  4E4F                     497          TRAP        #15
+0000046E                           498          
+Line 499 ERROR: Undefined symbol
+0000046E  4EB9 004DBD16            499          JSR         REGISTER_11_9
+00000474                           500              
+00000474  1C3C 0001                501          MOVE.B      #1,      D6
+00000478                           502          
+00000478  4E75                     503          RTS
+0000047A                           504          
+0000047A                           505  OP_CODE_OR2:
+0000047A  43F9 0000051C            506          LEA         WHITESPACE, A1
+00000480  103C 000E                507          MOVE.B      #14, D0
+00000484  4E4F                     508          TRAP        #15
+00000486                           509          
+00000486  43F9 00000521            510          LEA         DATA_REG, A1
+0000048C  103C 000E                511          MOVE.B      #14, D0
+00000490  4E4F                     512          TRAP        #15
+00000492                           513          
+Line 514 ERROR: Undefined symbol
+00000492  4EB9 004DBD16            514          JSR         REGISTER_11_9
+00000498                           515          
+00000498  43F9 0000051E            516          LEA         WHITESPACE_COM, A1
+0000049E  103C 000E                517          MOVE.B      #14, D0
+000004A2  4E4F                     518          TRAP        #15
+000004A4                           519          
+Line 520 ERROR: Undefined symbol
+000004A4  4EB9 004DBD16            520          JSR         EFFECTIVEADD_5_0
+000004AA                           521          
+000004AA  1C3C 0001                522          MOVE.B      #1,      D6
+000004AE                           523          
+000004AE  4E75                     524          RTS
+000004B0                           525          
+000004B0                           526  OP_CODE_JSR:
+000004B0  43F9 00000518            527          LEA         JSR_MSG, A1
+000004B6  103C 000E                528          MOVE.B      #14, D0
+000004BA  4E4F                     529          TRAP        #15
+000004BC                           530          
+000004BC  43F9 0000051C            531          LEA         WHITESPACE, A1
+000004C2  103C 000E                532          MOVE.B      #14, D0
+000004C6  4E4F                     533          TRAP        #15
+000004C8                           534          
+Line 535 ERROR: Undefined symbol
+000004C8  4EB9 004DBD16            535          JSR         EFFECTIVEADD_5_0
+000004CE                           536          
+000004CE  1C3C 0001                537          MOVE.B      #1,      D6
+000004D2                           538          
+000004D2  4E75                     539          RTS
+000004D4                           540  
+000004D4= 4E 4F 54 00              541  NOT_MSG:        DC.B        'NOT',0
+000004D8= 42 52 41 00              542  BRA_MSG:        DC.B        'BRA',0
+000004DC                           543  
+000004DC= 4D 4F 56 45 00           544  MOVE_MSG:       DC.B        'MOVE',0
+000004E1= 4D 4F 56 45 4D 00        545  MOVEM_MSG:      DC.B        'MOVEM',0
+000004E7= 4D 4F 56 45 41 00        546  MOVEA_MSG:      DC.B        'MOVEA',0
+000004ED= 4C 45 41 00              547  LEA_MSG:        DC.B        'LEA',0
+000004F1                           548  
+000004F1= 41 44 44 00              549  ADD_MSG:        DC.B        'ADD',0
+000004F5= 41 44 44 41 00           550  ADDA_MSG:       DC.B        'ADDA',0
+000004FA= 41 44 44 51 00           551  ADDQ_MSG:       DC.B        'ADDQ',0
+000004FF= 53 55 42 00              552  SUB_MSG:        DC.B        'SUB',0
+00000503= 52 54 53 00              553  RTS_MSG:        DC.B        'RTS',0
+00000507= 4E 4F 50 00              554  NOP_MSG:        DC.B        'NOP',0
+0000050B                           555  
+0000050B= 4D 4F 56 45 51 00        556  MOVEQ_MSG:      DC.B        'MOVEQ',0
+00000511= 41 4E 44 00              557  AND_MSG:        DC.B        'AND',0
+00000515= 4F 52 00                 558  OR_MSG:         DC.B        'OR',0
+00000518= 4A 53 52 00              559  JSR_MSG:        DC.B        'JSR',0
+0000051C                           560  
+0000051C= 20 00                    561  WHITESPACE:     DC.B        ' ',0
+0000051E= 2C 20 00                 562  WHITESPACE_COM: DC.B        ', ',0
+00000521                           563  
+00000521= 44 00                    564  DATA_REG:       DC.B        'D',0
+00000523= 41 00                    565  ADDR_REG:       DC.B        'A',0
+00000525                           566  
+00000525= 23 00                    567  IMM_DATA:       DC.B        '#',0
+00000527= 24 00                    568  HEX:            DC.B        '$',0
+00000529                           569  
+00000529= 2E 42 00                 570  DOT_BYTE:       DC.B        '.B',0
+0000052C= 2E 57 00                 571  DOT_WORD:       DC.B        '.W',0
+0000052F= 2E 4C 00                 572  DOT_LONG:       DC.B        '.L',0
+00000532                           573  
+00000532= 28 00                    574  START_PAREN     DC.B        '(',0
+00000534= 29 00                    575  END_PAREN       DC.B        ')',0
+00000536                           576  
+00000536= 2B 00                    577  PLUS_SIGN       DC.B        '+',0
+00000538= 2D 00                    578  MINUS_SIGN      DC.B        '-',0
+0000053A= 2F 00                    579  DIV_SIGN        DC.B        '/',0
+0000053C                           580  
+0000053C                           581  *DATA_MSG:   DC.B    'DATA',0
+0000053C                           582  
+0000053C                           583  
+Line 584 WARNING: END directive missing, starting address not set
+
+28 errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+ADDA_MSG            4F5
+ADDQ_MSG            4FA
+ADDR_REG            523
+ADD_MSG             4F1
+AND_MSG             511
+BRA_MSG             4D8
+CHECK_OPCODES       0
+DATA_REG            521
+DIV_SIGN            53A
+DOT_BYTE            529
+DOT_LONG            52F
+DOT_WORD            52C
+END_PAREN           534
+HEX                 527
+IMM_DATA            525
+ISOLATE_15_11       E0
+ISOLATE_15_12       68
+ISOLATE_15_14       F2
+ISOLATE_15_6        B4
+ISOLATE_15_8        C6
+ISOLATE_16          A2
+ISOLATE_8_6         104
+JSR_MSG             518
+LEA_MSG             4ED
+MEM_TO_REG          28E
+MINUS_SIGN          538
+MOVEA_MSG           4E7
+MOVEM_MSG           4E1
+MOVEQ_MSG           50B
+MOVE_MSG            4DC
+MTR_1_A             2C6
+MTR_1_B             2D4
+NOP_MSG             507
+NOT_MSG             4D4
+OP_CODE_ADD         2E2
+OP_CODE_ADDA        2F4
+OP_CODE_ADDQ        306
+OP_CODE_AND         3A8
+OP_CODE_AND2        3F6
+OP_CODE_BRA         14E
+OP_CODE_JSR         4B0
+OP_CODE_LEA         160
+OP_CODE_MOVE        172
+OP_CODE_MOVEA       1AE
+OP_CODE_MOVEM       1EA
+OP_CODE_MOVEQ       34E
+OP_CODE_NOP         33C
+OP_CODE_NOT         124
+OP_CODE_OR          42C
+OP_CODE_OR2         47A
+OP_CODE_RTS         32A
+OP_CODE_SUB         318
+OR_MSG              515
+PLUS_SIGN           536
+REG_TO_MEM          21C
+RETURN              66
+RTM_1_A             25A
+RTM_1_B             264
+RTM_2               26E
+RTS_MSG             503
+START_PAREN         532
+SUB_MSG             4FF
+WHITESPACE          51C
+WHITESPACE_COM      51E

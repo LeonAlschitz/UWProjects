@@ -1,0 +1,215 @@
+00000000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 8/11/2022 7:01:20 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00000000                             7  * Put variables and constants here
+00000000                             8  
+00000000= 57 65 6C 63 6F 6D ...      9  INTRO_MSG:       DC.B       'Welcome to Team Cools Disassembler!',CR,LF,0
+00000026= 50 6C 65 61 73 65 ...     10  STARTING_MSG:    DC.B       'Please enter the Starting Address',CR,LF,0
+0000004A= 50 6C 65 61 73 65 ...     11  ENDING_MSG:      DC.B       'Please enter the Ending Address',CR,LF,0
+0000006C= 44 6F 6E 65 20 52 ...     12  DONE_MSG:        DC.B       'Done Reading data',CR,LF,0
+00000080= 50 72 65 73 73 20 ...     13  RESTART_MSG:     DC.B       'Press 1 to restart, and 2 to exit',CR,LF,0
+000000A4= 54 68 61 6E 6B 20 ...     14  TY_MSG:          DC.B       'Thank you for trying out this disassembler',CR,LF,0
+000000D1                            15  
+000000D1                            16  * CR and LF for strings above because we want to go to next line after printing message
+000000D1                            17  
+000000D1                            18  STA_ADDR         DS.B        40
+000000F9                            19  END_ADDR         DS.B        40
+00000121                            20  
+00000121                            21  * no CR and LF for strings below because we want to print each number and letter
+00000121                            22  
+00000121= 20 20 00                  23  SPACE_MSG:       DC.B        '  ',0
+00000124                            24  
+00000124= 30 00                     25  ZERO_MSG:        DC.B        '0',0
+00000126= 31 00                     26  ONE_MSG:         DC.B        '1',0
+00000128= 32 00                     27  TWO_MSG:         DC.B        '2',0
+0000012A= 33 00                     28  THREE_MSG:       DC.B        '3',0
+0000012C= 34 00                     29  FOUR_MSG:        DC.B        '4',0
+0000012E= 35 00                     30  FIVE_MSG:        DC.B        '5',0
+00000130= 36 00                     31  SIX_MSG:         DC.B        '6',0
+00000132= 37 00                     32  SEVEN_MSG:       DC.B        '7',0
+00000134= 38 00                     33  EIGHT_MSG:       DC.B        '8',0
+00000136= 39 00                     34  NINE_MSG:        DC.B        '9',0
+00000138= 41 00                     35  A_MSG:           DC.B        'A',0
+0000013A= 42 00                     36  B_MSG:           DC.B        'B',0
+0000013C= 43 00                     37  C_MSG:           DC.B        'C',0
+0000013E= 44 00                     38  D_MSG:           DC.B        'D',0
+00000140= 45 00                     39  E_MSG:           DC.B        'E',0
+00000142= 46 00                     40  F_MSG:           DC.B        'F',0 
+00000144                            41  *-----------------------------------
+00000144= 4E 4F 54 00               42  NOT_MSG:        DC.B        'NOT',0
+00000148= 42 52 41 00               43  BRA_MSG:        DC.B        'BRA',0
+0000014C                            44  
+0000014C= 4D 4F 56 45 00            45  MOVE_MSG:       DC.B        'MOVE',0
+00000151= 4D 4F 56 45 4D 00         46  MOVEM_MSG:      DC.B        'MOVEM',0
+00000157= 4D 4F 56 45 41 00         47  MOVEA_MSG:      DC.B        'MOVEA',0
+0000015D                            48  
+0000015D                            49  
+0000015D= 41 44 44 00               50  ADD_MSG:        DC.B        'ADD',0
+00000161= 41 44 44 41 00            51  ADDA_MSG:       DC.B        'ADDA',0
+00000166= 41 44 44 51 00            52  ADDQ_MSG:       DC.B        'ADDQ',0
+0000016B= 53 55 42 00               53  SUB_MSG:        DC.B        'SUB',0
+0000016F= 52 54 53 00               54  RTS_MSG:        DC.B        'RTS',0
+00000173= 4E 4F 50 00               55  NOP_MSG:        DC.B        'NOP',0
+00000177                            56  
+00000177                            57  
+00000177                            58  
+00000177                            59  
+00000177                            60  
+00000177                            61  
+00000177= 20 00                     62  WHITESPACE:     DC.B        ' ',0
+00000179= 2C 20 00                  63  WHITESPACE_COM: DC.B        ', ',0
+0000017C                            64  
+0000017C= 44 00                     65  DATA_REG:       DC.B        'D',0
+0000017E= 41 00                     66  ADDR_REG:       DC.B        'A',0
+00000180                            67  
+00000180= 23 00                     68  IMM_DATA:       DC.B        '#',0
+00000182= 24 00                     69  HEX:            DC.B        '$',0
+00000184                            70  
+00000184= 2E 42 00                  71  DOT_BYTE:       DC.B        '.B',0
+00000187= 2E 57 00                  72  DOT_WORD:       DC.B        '.W',0
+0000018A= 2E 4C 00                  73  DOT_LONG:       DC.B        '.L',0
+0000018D                            74  
+0000018D= 28 00                     75  START_PAREN     DC.B        '(',0
+0000018F= 29 00                     76  END_PAREN       DC.B        ')',0
+00000191                            77  
+00000191= 2B 00                     78  PLUS_SIGN       DC.B        '+',0
+00000193= 2D 00                     79  MINUS_SIGN      DC.B        '-',0
+00000195= 2F 00                     80  DIV_SIGN        DC.B        '/',0
+00000197                            81  *-------------------------------
+00000197= 4A 53 52 20 00            82  JSRMSG:         DC.B        'JSR ',0
+0000019C= 4A 53 52 00               83  JSR_MSG:        DC.B        'JSR',0
+000001A0= 4D 4F 56 45 51 00         84  MOVEQ_MSG:      DC.B        'MOVEQ',0
+000001A6= 41 4E 44 00               85  AND_MSG:        DC.B        'AND',0
+000001AA= 4C 45 41 00               86  LEA_MSG         DC.B        'LEA',0
+000001AE= 41 53 52 00               87  ASR_MSG         DC.B        'ASR',0
+000001B2= 41 53 4C 00               88  ASL_MSG         DC.B        'ASL',0
+000001B6= 4C 53 52 00               89  LSR_MSG         DC.B        'LSR',0
+000001BA= 4C 53 4C 00               90  LSL_MSG         DC.B        'LSL',0
+000001BE= 52 4F 58 00               91  ROXR_MSG        DC.B        'ROX',0  *Unused messages but present because helps in indexing, DONT USE IT
+000001C2= 52 4F 58 00               92  ROXL_MSG        DC.B        'ROX',0  *Unused messages but present because helps in indexing, DONT USE IT
+000001C6= 52 4F 52 00               93  ROR_MSG         DC.B        'ROR',0
+000001CA= 52 4F 4C 00               94  ROL_MSG         DC.B        'ROL',0
+000001CE= 4F 52 00                  95  OR_MSG:         DC.B        'OR',0
+000001D1= 44 41 54 41 00            96  DATA_MSG:       DC.B        'DATA',0
+000001D6= 42 00                     97  BCC_MSG         DC.B        'B', 0
+000001D8= 42 4C 45 00               98  BLE_MSG         DC.B        'BLE', 0
+000001DC= 42 47 54 00               99  BGT_MSG         DC.B        'BGT',0
+000001E0= 42 45 51 00              100  BEQ_MSG         DC.B        'BEQ',0
+000001E4                           101  
+000001E4= 2E 42 00                 102  BYTE_MSG        DC.B        '.B', 0
+000001E7= 2E 57 00                 103  WORD_MSG        DC.B        '.W', 0
+000001EA= 2E 4C 00                 104  LONG_MSG        DC.B        '.L', 0
+000001ED                           105  
+000001ED= 2C 00                    106  COMMA_MSG       DC.B        ',', 0
+000001EF= 24 00                    107  DOLLAR_MSG      DC.B        '$', 0
+000001F1= 23 00                    108  HASH_MSG        DC.B        '#', 0
+000001F3= 2B 00                    109  PLUS_MSG        DC.B        '+', 0
+000001F5= 2D 00                    110  MINUS_MSG       DC.B        '-', 0
+000001F7= 28 00                    111  OPEN_PARENTHESIS_MSG  DC.B   '(', 0
+000001F9= 29 00                    112  CLOSE_PARENTHESIS_MSG DC.B  ')', 0
+000001FB                           113  
+000001FB                           114  
+000001FB                           115  *-----Carriage Return
+000001FB  =0000000D                116  CR              EQU          $0D
+000001FB                           117  *-----------Line Feed
+000001FB  =0000000A                118  LF              EQU          $0A
+000001FB                           119  
+000001FB= 0D 0A 00                 120  NEW_LINE:       DC.B         '',CR,LF,0
+Line 121 WARNING: END directive missing, starting address not set
+
+No errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+ADDA_MSG            161
+ADDQ_MSG            166
+ADDR_REG            17E
+ADD_MSG             15D
+AND_MSG             1A6
+ASL_MSG             1B2
+ASR_MSG             1AE
+A_MSG               138
+BCC_MSG             1D6
+BEQ_MSG             1E0
+BGT_MSG             1DC
+BLE_MSG             1D8
+BRA_MSG             148
+BYTE_MSG            1E4
+B_MSG               13A
+CLOSE_PARENTHESIS_MSG  1F9
+COMMA_MSG           1ED
+CR                  D
+C_MSG               13C
+DATA_MSG            1D1
+DATA_REG            17C
+DIV_SIGN            195
+DOLLAR_MSG          1EF
+DONE_MSG            6C
+DOT_BYTE            184
+DOT_LONG            18A
+DOT_WORD            187
+D_MSG               13E
+EIGHT_MSG           134
+ENDING_MSG          4A
+END_ADDR            F9
+END_PAREN           18F
+E_MSG               140
+FIVE_MSG            12E
+FOUR_MSG            12C
+F_MSG               142
+HASH_MSG            1F1
+HEX                 182
+IMM_DATA            180
+INTRO_MSG           0
+JSRMSG              197
+JSR_MSG             19C
+LEA_MSG             1AA
+LF                  A
+LONG_MSG            1EA
+LSL_MSG             1BA
+LSR_MSG             1B6
+MINUS_MSG           1F5
+MINUS_SIGN          193
+MOVEA_MSG           157
+MOVEM_MSG           151
+MOVEQ_MSG           1A0
+MOVE_MSG            14C
+NEW_LINE            1FB
+NINE_MSG            136
+NOP_MSG             173
+NOT_MSG             144
+ONE_MSG             126
+OPEN_PARENTHESIS_MSG  1F7
+OR_MSG              1CE
+PLUS_MSG            1F3
+PLUS_SIGN           191
+RESTART_MSG         80
+ROL_MSG             1CA
+ROR_MSG             1C6
+ROXL_MSG            1C2
+ROXR_MSG            1BE
+RTS_MSG             16F
+SEVEN_MSG           132
+SIX_MSG             130
+SPACE_MSG           121
+STARTING_MSG        26
+START_PAREN         18D
+STA_ADDR            D1
+SUB_MSG             16B
+THREE_MSG           12A
+TWO_MSG             128
+TY_MSG              A4
+WHITESPACE          177
+WHITESPACE_COM      179
+WORD_MSG            1E7
+ZERO_MSG            124
